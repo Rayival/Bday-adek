@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* font feel */
+body {
+  @apply bg-blue-50 text-blue-900;
+  font-family: 'Inter', sans-serif;
+}
+
+/* smooth feel */
+* {
+  scroll-behavior: smooth;
+}
