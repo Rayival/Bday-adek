@@ -4,50 +4,42 @@
     <!-- 🌌 background -->
     <div class="bg"></div>
 
-    <!-- 🌫️ glow -->
+    <!-- 🌫️ glow (safe layer) -->
     <div class="glow g1"></div>
     <div class="glow g2"></div>
 
-    <!-- ✨ floating -->
-    <div class="floating">
-      <span v-for="i in 5" :key="i" :style="randomStyle()">💙</span>
-      <span v-for="i in 2" :key="'s'+i" :style="randomStyle()">✨</span>
-    </div>
+    <!-- 💎 layout -->
+    <div class="container">
 
-    <!-- 🎁 VISUAL ICON -->
-    <div class="visual">
-      <div class="box">
-        <Gift class="gift-icon" />
+      <!-- ✨ TEXT -->
+      <div class="text-block">
+        <h1 class="title">it started simply...</h1>
+
+        <h2 class="highlight">just something small</h2>
+
+        <p class="sub">
+          but somehow, it stayed longer than expected
+        </p>
+
+        <button @click="$emit('next')" class="btn">
+          continue →
+        </button>
       </div>
 
-      <div class="sparkle">
-        <Sparkles class="sparkle-icon" />
+      <!-- 🎁 VISUAL -->
+      <div class="visual">
+
+        <!-- animated rings -->
+        <div class="ring r1"></div>
+        <div class="ring r2"></div>
+        <div class="ring r3"></div>
+
+        <!-- glass card -->
+        <div class="box">
+          <Gift class="icon" />
+        </div>
+
       </div>
-    </div>
-
-    <!-- 💎 content -->
-    <div class="content">
-
-      <h1 class="title">
-        i have something small...
-      </h1>
-
-      <h2 class="highlight">
-        just for you ✨
-      </h2>
-
-      <p class="sub">
-        a simple little story, but meaningful
-      </p>
-
-      <button @click="$emit('next')" class="btn">
-        <Gift class="w-5 h-5" />
-        start slowly 💙
-      </button>
-
-      <!-- <p class="hint">
-        (take it easy, no rush)
-      </p> -->
 
     </div>
 
@@ -55,184 +47,202 @@
 </template>
 
 <script setup>
-import { Gift, Sparkles } from 'lucide-vue-next'
-
-const randomStyle = () => ({
-  left: Math.random() * 100 + "%",
-  animationDuration: 6 + Math.random() * 6 + "s"
-})
+import { Gift } from 'lucide-vue-next'
 </script>
 
 <style scoped>
 
-/* 🌌 wrapper */
+/* 🌌 WRAPPER */
 .wrapper {
-  @apply min-h-screen flex items-center justify-center relative overflow-hidden px-4;
+  @apply min-h-screen flex items-center justify-center relative overflow-hidden px-5 md:px-8;
 }
 
-/* 🌌 background */
+/* 🌌 BG */
 .bg {
   position: absolute;
   inset: 0;
   background: linear-gradient(120deg, #020617, #0f172a, #020617);
 }
 
-/* 🌫️ glow */
+/* 🌫️ GLOW (NO BLOCK CLICK) */
 .glow {
   position: absolute;
   border-radius: 9999px;
   filter: blur(140px);
   opacity: 0.25;
-  animation: moveGlow 12s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .g1 {
-  width: 400px;
-  height: 400px;
+  width: 350px;
+  height: 350px;
   background: #3b82f6;
   top: -120px;
   left: -120px;
 }
 
 .g2 {
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
   background: #60a5fa;
   bottom: -120px;
   right: -120px;
 }
 
-/* ✨ floating */
-.floating span {
-  position: absolute;
-  bottom: -10px;
-  font-size: 12px;
-  opacity: 0.15;
-  animation: floatUp linear infinite;
+/* 💎 LAYOUT */
+.container {
+  @apply grid md:grid-cols-2 gap-10 md:gap-14 items-center max-w-5xl w-full;
+  position: relative;
+  z-index: 10;
 }
 
-/* 🎁 visual */
-.visual {
-  position: absolute;
-  top: 12%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 5;
+/* ✨ TEXT */
+.text-block {
+  @apply text-center md:text-left;
 }
 
-/* box responsive */
-.box {
-  width: 90px;
-  height: 90px;
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(20px);
-  border-radius: 20px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-
-  transform: rotate(-10deg);
-}
-
-@media (min-width: 768px) {
-  .box {
-    width: 130px;
-    height: 130px;
-  }
-}
-
-/* icon utama */
-.gift-icon {
-  width: 28px;
-  height: 28px;
-  color: white;
-}
-
-@media (min-width: 768px) {
-  .gift-icon {
-    width: 40px;
-    height: 40px;
-  }
-}
-
-/* sparkle */
-.sparkle {
-  position: absolute;
-  right: -15px;
-  bottom: -15px;
-
-  width: 40px;
-  height: 40px;
-
-  background: white;
-  border-radius: 999px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-.sparkle-icon {
-  width: 18px;
-  height: 18px;
-  color: #3b82f6;
-}
-
-/* 💎 content */
-.content {
-  @apply text-center z-10 max-w-md md:max-w-xl mt-32 md:mt-40;
-}
-
-/* typography */
 .title {
   font-family: 'Playfair Display', serif;
-  @apply text-2xl md:text-5xl text-white font-semibold;
+  @apply text-2xl md:text-5xl text-white;
+  animation: fadeUp 0.8s ease forwards;
 }
 
 .highlight {
   font-family: 'Playfair Display', serif;
   @apply text-2xl md:text-5xl italic text-blue-400 mt-2;
+  animation: fadeUp 0.8s ease forwards;
+  animation-delay: 0.3s;
 }
 
 .sub {
-  font-family: 'Inter', sans-serif;
-  @apply text-[10px] md:text-xs tracking-[0.25em] text-blue-300 mt-5 uppercase;
+  @apply text-xs md:text-sm text-blue-300 mt-4 leading-relaxed;
+  animation: fadeUp 0.8s ease forwards;
+  animation-delay: 0.6s;
 }
 
-/* button */
+/* 🎁 VISUAL */
+.visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 💎 BOX */
+.box {
+  width: 110px;
+  height: 110px;
+
+  @media (min-width: 768px) {
+    width: 140px;
+    height: 140px;
+  }
+
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(25px);
+  border-radius: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+
+  z-index: 3;
+
+  animation: scaleIn 0.8s ease forwards;
+}
+
+/* 🎯 ICON */
+.icon {
+  width: 32px;
+  height: 32px;
+
+  @media (min-width: 768px) {
+    width: 42px;
+    height: 42px;
+  }
+
+  color: white;
+}
+
+/* 🔵 RINGS */
+.ring {
+  position: absolute;
+  border-radius: 999px;
+  border: 1px solid rgba(96,165,250,0.2);
+  pointer-events: none;
+}
+
+.r1 {
+  width: 150px;
+  height: 150px;
+  animation: pulse 3s infinite;
+}
+
+.r2 {
+  width: 200px;
+  height: 200px;
+  animation: pulse 3s infinite;
+  animation-delay: 1s;
+}
+
+.r3 {
+  width: 260px;
+  height: 260px;
+  animation: pulse 3s infinite;
+  animation-delay: 2s;
+}
+
+/* 🔘 BUTTON */
 .btn {
-  @apply mt-8 md:mt-10 px-6 md:px-8 py-3 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white flex items-center gap-2 mx-auto transition;
+  @apply mt-6 px-6 py-3 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white transition;
+  animation: fadeUp 0.8s ease forwards;
+  animation-delay: 0.9s;
+
+  position: relative;
+  z-index: 20;
 }
 
 .btn:hover {
   transform: scale(1.05);
   background: rgba(255,255,255,0.2);
-  box-shadow: 0 0 20px rgba(59,130,246,0.3);
+  box-shadow: 0 0 25px rgba(59,130,246,0.3);
 }
 
-.btn:active {
-  transform: scale(0.95);
+/* 🎬 ANIMATIONS */
+@keyframes pulse {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
 }
 
-/* hint */
-.hint {
-  @apply text-xs text-blue-400 mt-3 opacity-70;
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* animasi */
-@keyframes moveGlow {
-  from { transform: translateY(0); }
-  to { transform: translateY(20px); }
-}
-
-@keyframes floatUp {
-  from { transform: translateY(0); }
-  to { transform: translateY(-120vh); opacity: 0; }
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 </style>

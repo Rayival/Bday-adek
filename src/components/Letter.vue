@@ -20,8 +20,14 @@
       <!-- 📝 title -->
       <h1 class="heading">for you ✨</h1>
 
+      <svg class="svg-top" viewBox="0 0 400 100">
+        <path d="M0 50 Q100 10 200 50 T400 50" />
+      </svg>
+
       <!-- 📖 letter -->
       <div class="letter">
+
+        <div class="icon-overlay">💙</div>
 
         <p class="text">
           <span v-html="displayed"></span>
@@ -29,6 +35,10 @@
         </p>
 
       </div>
+
+      <svg class="svg-bottom" viewBox="0 0 400 100">
+        <path d="M0 50 Q100 90 200 50 T400 50" />
+      </svg>
 
       <!-- button -->
       <button v-if="done" @click="$emit('next')" class="btn">
@@ -48,94 +58,122 @@ const done = ref(false)
 
 /* 💙 isi lebih panjang + campur indo english + minta maaf */
 const sentences = [
-  "happy birthday yaa... 🎂",
+  "selamat ulang tahun yaa 🎂",
   "",
-  "aku bingung mulai dari mana...",
-  "tapi mungkin aku mulai dari ini dulu...",
+  "hari ini mungkin cuma satu hari biasa buat banyak orang…",
+  "tapi buat aku… hari ini spesial banget.",
   "",
-  "<b>makasih ya...</b>",
-  "udah hadir di dunia ini.",
+  "hari dimana seseorang yang berarti banget di hidup aku lahir ke dunia ini.",
   "",
-  "dan makasih juga...",
-  "pernah ada di hidup aku, walaupun ga selamanya.",
+  "aku harap di umur kamu yang sekarang…",
+  "semua hal baik selalu deket sama kamu.",
   "",
-  "jujur...",
-  "di hari kayak gini aku jadi banyak keinget hal-hal lama.",
+  "semoga kamu selalu dikelilingi orang-orang yang tulus…",
+  "selalu diberi kebahagiaan…",
+  "dan semua yang kamu usahakan pelan-pelan bisa tercapai.",
   "",
-  "hal-hal kecil yang mungkin dulu keliatan biasa aja...",
-  "tapi sekarang kerasa banget artinya buat aku.",
+  "aamiinn",
   "",
-  "cara kita ngobrol...",
-  "candaan random kita...",
-  "dan semua momen sederhana itu...",
-  "ternyata ninggalin sesuatu yang ga sederhana.",
+  "aku juga mau jujur sedikit…",
   "",
-  "aku sadar...",
-  "dulu aku belum bisa jadi yang terbaik buat kamu.",
+  "kalau dipikir-pikir ke belakang…",
+  "aku ngerasa dulu aku belum jadi versi terbaik dari diri aku.",
   "",
-  "bahkan mungkin...",
-  "aku masih sering bikin kamu kecewa tanpa aku sadar.",
+  "bahkan hal kecil kayak ngasih sesuatu ke kamu aja…",
+  "aku belum pernah.",
   "",
-  "<b>dan aku minta maaf ya...</b>",
-  "kalau dulu banyak kurangnya aku...",
-  "kalau ada sikap aku yang nyakitin atau bikin kamu ga nyaman.",
+  "dan entah kenapa…",
+  "itu selalu kepikiran sampai sekarang.",
   "",
-  "sekarang aku lagi belajar...",
-  "pelan-pelan memperbaiki diri aku.",
+  "makanya di momen ini…",
+  "aku pengen memperbaiki itu.",
   "",
-  "dan kamu harus tau...",
-  "<b>kamu itu salah satu alasan terbesar aku berubah.</b>",
+  "walaupun sederhana…",
+  "tapi ini bener-bener tulus dari aku.",
   "",
-  "karena kamu...",
-  "aku belajar buat lebih menghargai orang lain.",
-  "aku belajar buat jadi lebih dewasa.",
-  "dan aku belajar buat jadi versi diri aku yang lebih baik.",
+  "aku masih inget gimana kamu dari dulu sampai sekarang…",
   "",
-  "makasih ya...",
-  "karena selama ini kamu selalu baik sama aku.",
+  "cara kamu bersikap…",
+  "cara kamu memperlakukan aku dengan baik…",
+  "cara kamu selalu menghargai aku…",
   "",
-  "kamu selalu hargain aku...",
-  "selalu support aku...",
-  "bahkan di saat aku belum jadi siapa-siapa.",
+  "bahkan di saat aku sendiri…",
+  "belum tentu bisa menghargai diri aku sendiri.",
   "",
-  "dan jujur aja...",
-  "<b>itu berarti banget buat aku.</b>",
+  "kamu itu…",
+  "<b>selalu baik.</b>",
+  "<b>selalu support aku.</b>",
+  "<b>selalu ada.</b>",
   "",
-  "aku mungkin ga selalu nunjukin...",
-  "tapi aku selalu inget semuanya.",
+  "dan tanpa kamu sadar…",
   "",
-  "dan sampai sekarang...",
+  "<b>kamu jadi salah satu alasan terbesar aku buat berkembang.</b>",
   "",
-  "<b>aku masih sayang banget sama kamu.</b>",
+  "aku berubah pelan-pelan…",
+  "aku belajar banyak hal…",
   "",
-  "perasaan itu ga pernah bener-bener hilang...",
-  "cuma aku simpen, aku jaga, dan aku perbaiki pelan-pelan.",
+  "dan jujur…",
+  "di balik semua itu, ada kamu.",
   "",
-  "aku ga tau ke depannya gimana...",
-  "aku juga ga mau maksa apapun.",
+  "kamu yang jadi alasan diam-diam aku buat jadi lebih baik.",
   "",
-  "tapi kalau ada satu hal yang pasti...",
   "",
-  "<span class='hand'>aku selalu pengen liat kamu bahagia.</span>",
+  "<b>maafin aku ya adee…</b>",
   "",
-  "dengan atau tanpa aku.",
+  "selama ini aku banyak salah.",
+  "banyak bikin kamu kecewa…",
+  "banyak bikin kamu sedih…",
   "",
-  "semoga di umur kamu yang sekarang...",
-  "semua hal baik dateng ke kamu.",
+  "bahkan mungkin…",
+  "pernah bikin kamu nangis.",
   "",
-  "semoga kamu selalu dikelilingi orang-orang yang sayang sama kamu...",
-  "dan semoga semua yang kamu harapin bisa tercapai.",
+  "dan jujur…",
+  "kalau aku inget itu semua…",
   "",
-  "dan kalau suatu hari nanti...",
-  "kita dipertemukan lagi dengan versi kita yang lebih baik...",
+  "<b>aku juga ikut sakit.</b>",
   "",
-  "aku harap kita bisa ngobrol lagi...",
-  "tanpa rasa asing.",
+  "tapi sekarang aku lagi belajar…",
+  "belajar jadi pribadi yang lebih baik.",
+  "pelan-pelan…",
   "",
-  "once again...",
+  "aku ga janji jadi sempurna…",
+  "tapi aku janji bakal terus berusaha.",
   "",
-  "<b>happy birthday 💙</b>"
-];
+  "setidaknya jadi versi yang lebih baik dari yang dulu.",
+  "",
+  "",
+  "aku juga mau bilang sesuatu…",
+  "",
+  "yang mungkin sederhana…",
+  "tapi ini jujur dari hati aku",
+  "",
+  "<b>aku selalu sayang banget sama kamu.</b>",
+  "",
+  "aku ga mau bikin semuanya jadi berat…",
+  "",
+  "aku cuma pengen kamu ngerasa satu hal:",
+  "",
+  "bahwa kamu dihargai…",
+  "bahwa kehadiran kamu berarti…",
+  "",
+  "dan bahwa ada seseorang di sini…",
+  "yang selalu doain kamu dengan tulus…",
+  "",
+  "selalu bangga sama kamu…",
+  "dan selalu dukung kamu.",
+  "",
+  "",
+  "sekali lagi…",
+  "",
+  "<b>selamat ulang tahun yaa </b>",
+  "",
+  "semoga hari kamu hangat…",
+  "penuh senyum…",
+  "dan penuh hal-hal baik.",
+  "",
+  "",
+  "<span class='hand'>i'll always care about you… ilysm❤️.</span>"
+]
 
 const typeSentence = (sentence) => {
   return new Promise((resolve) => {
@@ -187,6 +225,34 @@ const randomStyle = () => ({
   background: linear-gradient(120deg, #020617, #0f172a, #020617);
 }
 
+.svg-top, .svg-bottom {
+  width: 100%;
+}
+
+.svg-top path {
+  stroke: #60a5fa;
+  stroke-width: 1.5;
+  fill: none;
+  opacity: 0.2;
+}
+
+.svg-bottom path {
+  stroke: #60a5fa;
+  stroke-width: 1.5;
+  fill: none;
+  opacity: 0.15;
+}
+
+.icon-overlay {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  font-size: 60px;
+  opacity: 0.05;
+  pointer-events: none;
+  filter: blur(2px);
+}
+
 /* glow */
 .glow {
   position: absolute;
@@ -208,6 +274,18 @@ const randomStyle = () => ({
 .content {
   @apply text-center z-10 max-w-2xl mx-auto;
 }
+.content::before {
+  content: "";
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(59,130,246,0.15), transparent);
+  filter: blur(100px);
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
 
 /* heading */
 .heading {
@@ -218,12 +296,16 @@ const randomStyle = () => ({
 /* letter */
 .letter {
   @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 md:p-10 text-left;
+  box-shadow: 
+    0 20px 60px rgba(0,0,0,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.1);
+    animation: fadeUp 1s ease;
 }
 
 /* text */
 .text {
   font-family: 'Inter', sans-serif;
-  @apply text-sm md:text-base text-blue-100 leading-relaxed;
+  @apply text-sm md:text-base text-blue-100 leading-relaxed tracking-wide;
 }
 
 /* highlight */
@@ -260,6 +342,17 @@ const randomStyle = () => ({
 @keyframes blink {
   0%,100% { opacity: 1; }
   50% { opacity: 0; }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 </style>

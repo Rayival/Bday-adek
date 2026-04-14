@@ -8,7 +8,7 @@
     <div class="glow g1"></div>
     <div class="glow g2"></div>
 
-    <!-- ✨ floating -->
+    <!-- ✨ floating (safe) -->
     <div class="floating">
       <span v-for="i in 6" :key="i" :style="randomStyle()">💙</span>
       <span v-for="i in 4" :key="'s'+i" :style="randomStyle()">✨</span>
@@ -17,57 +17,53 @@
     <!-- 💎 content -->
     <div class="content">
 
-      <h1 class="title">
-        little moments ✨
-      </h1>
+      <h1 class="title">little moments ✨</h1>
 
       <p class="subtitle">
         some small memories that still feel special
       </p>
 
       <!-- 📸 GRID -->
-      <div class="grid md:grid-cols-2 gap-6 md:gap-10 mt-12">
+      <div class="grid">
 
         <div
           v-for="(item, i) in items"
           :key="i"
           class="card group"
-          :style="{ animationDelay: i * 0.2 + 's' }"
+          :style="{ animationDelay: i * 0.12 + 's' }"
         >
 
-          <!-- 🌟 overlay glow -->
+          <!-- glow overlay -->
           <div class="overlay"></div>
+
+          <!-- shine effect -->
+          <div class="shine"></div>
 
           <!-- media -->
           <div class="media-wrap">
 
-            <img
-              v-if="item.type === 'img'"
-              :src="item.src"
-              class="media"
-            />
+          <!-- IMAGE -->
+          <img 
+            v-if="item.type === 'img'" 
+            :src="item.src" 
+            class="media-img"
+          />
 
-            <video
-              v-else
-              controls
-              class="media"
-            >
-              <source :src="item.src" />
-            </video>
+          <!-- VIDEO -->
+          <video 
+            v-else 
+            controls 
+            class="media-video"
+          >
+            <source :src="item.src" />
+          </video>
 
-          </div>
+        </div>
 
-          <!-- 📝 text -->
+          <!-- text -->
           <div class="text">
-
-            <h2 class="card-title">
-              {{ item.title }}
-            </h2>
-
-            <p class="card-desc">
-              {{ item.desc }}
-            </p>
-
+            <h2 class="card-title">{{ item.title }}</h2>
+            <p class="card-desc">{{ item.desc }}</p>
           </div>
 
         </div>
@@ -76,7 +72,7 @@
 
       <!-- button -->
       <button @click="$emit('next')" class="btn">
-        continue 💙 →
+        continue →
       </button>
 
     </div>
@@ -85,39 +81,38 @@
 </template>
 
 <script setup>
-import foto1 from '@/assets/img/foto1.png'
-import foto2 from '@/assets/img/foto2.png'
-import video1 from '@/assets/video/video1.png'
-import video2 from '@/assets/video/video2.png'
+import foto1 from '@/assets/img/foto1.jpg'
+import foto2 from '@/assets/img/foto2.jpg'
+import foto3 from '@/assets/img/foto3.jpg'
+import video1 from '../assets/video/video1.mp4'
 
 const items = [
   {
     type: 'img',
     src: foto1,
-    title: 'that moment',
-    desc: 'i don’t know why, but this one feels special.'
+    title: 'a quiet night in the rain',
+    desc: 'malam itu kita ujanan bareng… inget banget suasananya dingin, jalanan juga sepi. aa nemenin kamu jalan karena jujur aa khawatir… takut kamu kenapa-napa. tapi anehnya, di tengah rasa khawatir itu aa malah ngerasa seneng bangettt sesimpel itu aja udah bikin aa ngerasa hangat. kayak… aa pengen momen itu ga cepet selesai. sampai sekarang kalau inget itu, rasanya masih sama… hangat dan tenang.'
   },
   {
     type: 'img',
     src: foto2,
-    title: 'simple but nice',
-    desc: 'just something small… but it stayed.'
+    title: 'our first little moment',
+    desc: 'ini pertama kalinya kita tos… keliatannya kecil banget ya, bahkan mungkin biasa aja buat orang lain. tapi buat aa, itu beda. dari hal kecil itu aa mulai ngerasa nyaman… mulai ngerasa ada sesuatu yang spesial tanpa harus dijelasin. lucunya, justru moment kecil kayak gini yang paling sering keinget sampai sekarang 😄'
+  },
+  {
+    type: 'img',
+    src: foto3,
+    title: 'when we started talking',
+    desc: 'ini pertama kali kita ngobrol… masih malu-malu banget, bahkan pas fotbar juga keliatan kaku 😭 tapi justru itu yang bikin semuanya kerasa jujur. ga ada yang dibuat-buat, semuanya ngalir aja. dari situ aa mulai kenal kamu pelan-pelan… cara kamu ngomong, cara kamu bersikap… dan tanpa sadar, dari moment sesimpel itu aa mulai ngerasa kamu berarti.'
   },
   {
     type: 'video',
     src: video1,
-    title: 'a little memory',
-    desc: 'this one made me smile, not gonna lie.'
-  },
-  {
-    type: 'video',
-    src: video2,
-    title: 'still remember',
-    desc: 'some moments just don’t fade that easily.'
+    title: 'a simple night together',
+    desc: 'di video ini keliatannya sederhana banget… kita tos lagi, aa nemenin kamu jalan karena udah malem. tapi justru itu yang bikin berarti. bukan karena tempatnya, bukan karena momentnya harus besar… tapi karena itu sama kamu. jujur, moment kecil kayak gini yang paling sering aa inget. karena di situ aa ngerasa bener-bener seneng… dengan cara yang sederhana, tapi tulus banget.'
   }
 ]
 
-// floating
 const randomStyle = () => ({
   left: Math.random() * 100 + "%",
   animationDuration: 6 + Math.random() * 6 + "s"
@@ -128,10 +123,28 @@ const randomStyle = () => ({
 
 /* wrapper */
 .wrapper {
-  @apply min-h-screen flex flex-col justify-start relative overflow-hidden px-4;
-  padding-top: 100px;
-  padding-bottom: 100px;
+  @apply relative overflow-hidden px-4;
   min-height: 100dvh;
+  padding-top: clamp(80px, 10vh, 140px);
+  padding-bottom: clamp(80px, 10vh, 140px);
+}
+
+/* FOTO (tetap landscape) */
+.media-img {
+  @apply w-full h-[180px] md:h-[260px] object-cover;
+  transition: 0.6s;
+}
+
+/* VIDEO (story mode 9:16 🔥) */
+.media-video {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: 0.6s;
+  box-shadow: 
+    0 10px 30px rgba(0,0,0,0.4),
+    0 0 0 1px rgba(255,255,255,0.1);
 }
 
 /* bg */
@@ -147,19 +160,20 @@ const randomStyle = () => ({
   border-radius: 9999px;
   filter: blur(140px);
   opacity: 0.25;
+  pointer-events: none;
 }
 
 .g1 {
-  width: 400px;
-  height: 400px;
+  width: 350px;
+  height: 350px;
   background: #3b82f6;
   top: -120px;
   left: -120px;
 }
 
 .g2 {
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
   background: #60a5fa;
   bottom: -120px;
   right: -120px;
@@ -168,50 +182,83 @@ const randomStyle = () => ({
 /* floating */
 .floating span {
   position: absolute;
-  bottom: -10px;
   font-size: 14px;
-  opacity: 0.2;
+  opacity: 0.15;
   animation: floatUp linear infinite;
+  pointer-events: none;
 }
 
 /* content */
 .content {
-  @apply text-center z-10 max-w-5xl w-full mx-auto;
+  @apply text-center z-10 max-w-5xl w-full mx-auto relative;
 }
 
 /* title */
 .title {
   font-family: 'Playfair Display', serif;
-  @apply text-3xl md:text-5xl text-white font-semibold;
+  @apply text-3xl md:text-5xl text-white;
 }
 
+/* subtitle */
 .subtitle {
   @apply text-sm md:text-base text-blue-300 mt-3;
 }
 
+/* grid */
+.grid {
+  display: grid;
+  gap: 16px;
+  margin-top: 40px;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
 /* card */
 .card {
-  @apply relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden transition duration-500;
-  animation: fadeUp 0.8s ease forwards;
+  @apply relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden;
+  animation: fadeUp 0.6s ease forwards;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: 0.4s;
 }
 
 /* overlay glow */
 .overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at center, rgba(59,130,246,0.2), transparent);
+  background: radial-gradient(circle, rgba(59,130,246,0.3), transparent);
   opacity: 0;
   transition: 0.4s;
+  pointer-events: none;
+}
+
+/* shine */
+.shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.15), transparent);
+  opacity: 0;
+  transition: 0.6s;
+}
+
+/* hover */
+.card:hover {
+  transform: translateY(-12px) scale(1.04);
+  box-shadow: 0 30px 100px rgba(0,0,0,0.6);
 }
 
 .card:hover .overlay {
   opacity: 1;
 }
 
-/* hover */
-.card:hover {
-  transform: translateY(-10px) scale(1.03);
-  box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+.card:hover .shine {
+  opacity: 1;
+  transform: translateX(100%);
 }
 
 /* media */
@@ -220,7 +267,8 @@ const randomStyle = () => ({
 }
 
 .media {
-  @apply w-full h-[200px] md:h-[260px] object-cover transition duration-500;
+  @apply w-full h-[180px] md:h-[260px] object-cover;
+  transition: 0.6s;
 }
 
 .card:hover .media {
@@ -247,15 +295,10 @@ const randomStyle = () => ({
 
 .btn:hover {
   transform: scale(1.05);
-  background: rgba(255,255,255,0.2);
 }
 
-/* animasi */
+/* animations */
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(25px);
-  }
   to {
     opacity: 1;
     transform: translateY(0);

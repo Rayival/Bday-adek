@@ -1,16 +1,22 @@
 <template>
   <div class="wrapper">
 
-    <!-- 🌌 background -->
+    <!-- 🌌 bg -->
     <div class="bg"></div>
 
     <!-- 🌫️ glow -->
     <div class="glow"></div>
 
+    <!-- 🌙 moon -->
+    <div class="moon"></div>
+
     <!-- ✨ stars -->
     <div class="stars">
       <span v-for="i in 25" :key="i" :style="randomStar()"></span>
     </div>
+
+    <!-- 🌠 shooting -->
+    <div class="shooting"></div>
 
     <!-- 🌸 flowers -->
     <div class="flowers">
@@ -19,35 +25,39 @@
 
     <!-- 💙 love -->
     <div class="love">
-      <span v-for="i in 5" :key="'l'+i" :style="randomLove()">💙</span>
+      <span v-for="i in 6" :key="'l'+i" :style="randomLove()">💙</span>
     </div>
 
     <!-- 💎 content -->
     <div class="content">
 
-      <p class="text fade1">
-        i don’t expect anything...
-      </p>
+      <div class="text-box">
 
-      <p class="text fade2">
-        i just want you to know...
-      </p>
+        <p class="text fade1">
+          i don’t expect anything...
+        </p>
 
-      <h1 class="main fade3">
-        you meant a lot to me 💙
-      </h1>
+        <p class="text fade2">
+          i just want you to know...
+        </p>
 
-      <p class="sub fade4">
-        lebih dari yang pernah aku bilang...
-      </p>
+        <h1 class="main fade3">
+          you meant a lot to me 💙
+        </h1>
 
-      <p class="sub fade5">
-        semoga hari-hari kamu selalu baik ✨
-      </p>
+        <p class="sub fade4">
+          more than i ever said...
+        </p>
 
-      <p class="final fade6">
-        take care... always 🌙
-      </p>
+        <p class="sub fade5">
+          semoga hari-hari kamu selalu baik ✨
+        </p>
+
+        <p class="final fade6">
+          take care... always 🌙
+        </p>
+
+      </div>
 
     </div>
 
@@ -55,56 +65,64 @@
 </template>
 
 <script setup>
-
-// ⭐ stars
 const randomStar = () => ({
   left: Math.random() * 100 + "%",
   top: Math.random() * 100 + "%",
   animationDuration: 2 + Math.random() * 4 + "s"
 })
 
-// 🌸 flowers
 const randomFlower = () => ({
   left: Math.random() * 100 + "%",
   animationDelay: Math.random() * 2 + "s"
 })
 
-// 💙 love
 const randomLove = () => ({
   left: Math.random() * 100 + "%",
   animationDuration: 6 + Math.random() * 5 + "s"
 })
-
 </script>
 
 <style scoped>
 
-/* wrapper (SAFE MOBILE) */
+/* wrapper */
 .wrapper {
-  @apply min-h-screen flex flex-col justify-center items-center relative overflow-hidden px-4;
-  padding-top: clamp(80px, 10vh, 140px);
-  padding-bottom: clamp(80px, 10vh, 140px);
+  @apply relative flex items-center justify-center overflow-hidden px-4;
+  min-height: 100dvh;
 }
 
-/* background */
+/* bg */
 .bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, #020617, #0f172a, #020617);
+  background: radial-gradient(circle at center, #0f172a, #020617 70%);
 }
 
 /* glow */
 .glow {
   position: absolute;
-  width: 400px;
-  height: 400px;
+  width: 500px;
+  height: 500px;
   background: #3b82f6;
-  filter: blur(150px);
-  opacity: 0.2;
-  border-radius: 9999px;
-  top: 30%;
+  filter: blur(180px);
+  opacity: 0.25;
+  border-radius: 999px;
+  top: 40%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
+  animation: pulseGlow 6s ease-in-out infinite;
+}
+
+/* moon */
+.moon {
+  position: absolute;
+  top: 12%;
+  right: 8%;
+  width: 90px;
+  height: 90px;
+  background: radial-gradient(circle, #fff, #93c5fd);
+  border-radius: 999px;
+  opacity: 0.2;
+  filter: blur(3px);
 }
 
 /* stars */
@@ -118,54 +136,99 @@ const randomLove = () => ({
   animation: blink 3s infinite;
 }
 
-/* 🌸 flowers */
+/* shooting */
+.shooting {
+  position: absolute;
+  top: 20%;
+  left: -10%;
+  width: 140px;
+  height: 2px;
+  background: linear-gradient(to right, white, transparent);
+  opacity: 0.6;
+  animation: shoot 8s linear infinite;
+}
+
+/* flowers */
 .flowers span {
   position: absolute;
   bottom: -20px;
   font-size: 18px;
-  opacity: 0.7;
+  opacity: 0.6;
   animation: growFlower 3s ease forwards;
-  filter: drop-shadow(0 0 6px rgba(255,255,255,0.3));
 }
 
-/* 💙 love */
+/* love */
 .love span {
   position: absolute;
   bottom: -10px;
   font-size: 16px;
-  opacity: 0.25;
+  opacity: 0.2;
   animation: floatLove linear infinite;
 }
 
-/* content */
+/* 💎 content */
 .content {
-  @apply text-center z-10 max-w-xl;
+  @apply flex items-center justify-center w-full px-4 z-10;
+}
+
+/* 💎 TEXT BOX */
+.text-box {
+  @apply w-full max-w-2xl text-center px-6 md:px-12 py-10 md:py-14 rounded-3xl;
+
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(30px);
+  border: 1px solid rgba(255,255,255,0.1);
+
+  box-shadow:
+    0 30px 120px rgba(0,0,0,0.7),
+    inset 0 0 60px rgba(59,130,246,0.08);
+
+  position: relative;
+}
+
+/* glow tengah */
+.text-box::before {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(59,130,246,0.15), transparent);
+  filter: blur(80px);
+  z-index: -1;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* text kecil */
 .text {
   font-family: 'Inter', sans-serif;
-  @apply text-sm md:text-base text-blue-300 opacity-0;
+  @apply text-sm md:text-base text-blue-300 opacity-0 tracking-wide;
 }
 
-/* main */
+/* MAIN */
 .main {
   font-family: 'Playfair Display', serif;
-  @apply text-3xl md:text-5xl text-white mt-6 opacity-0;
+  @apply text-4xl md:text-6xl text-white mt-6 opacity-0 leading-tight;
+
+  animation:
+    glowText 3s ease-in-out infinite alternate,
+    pulseText 4s ease infinite;
 }
 
 /* sub */
 .sub {
-  @apply text-sm text-blue-400 mt-3 opacity-0;
+  font-family: 'Inter', sans-serif;
+  @apply text-sm md:text-base text-blue-400 mt-4 opacity-0;
 }
 
 /* final */
 .final {
   font-family: 'Caveat', cursive;
-  @apply text-blue-300 text-lg mt-6 opacity-0;
+  @apply text-xl md:text-2xl text-blue-300 mt-6 opacity-0;
 }
 
-/* fade timing */
+/* fade */
 .fade1 { animation: fadeIn 1s forwards 0.5s }
 .fade2 { animation: fadeIn 1s forwards 1.5s }
 .fade3 { animation: fadeIn 1.2s forwards 2.5s }
@@ -173,16 +236,10 @@ const randomLove = () => ({
 .fade5 { animation: fadeIn 1s forwards 4.5s }
 .fade6 { animation: fadeIn 1.2s forwards 5.5s }
 
-/* animations */
+/* anim */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes blink {
@@ -191,19 +248,34 @@ const randomLove = () => ({
 }
 
 @keyframes growFlower {
-  0% {
-    transform: translateY(40px) scale(0.5);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0) scale(1);
-    opacity: 0.7;
-  }
+  from { transform: translateY(40px) scale(0.5); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 0.6; }
 }
 
 @keyframes floatLove {
   from { transform: translateY(0); }
   to { transform: translateY(-120vh); opacity: 0; }
+}
+
+@keyframes shoot {
+  0% { transform: translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateX(120vw); opacity: 0; }
+}
+
+@keyframes pulseGlow {
+  0%,100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.2); }
+}
+
+@keyframes glowText {
+  from { text-shadow: 0 0 8px rgba(59,130,246,0.3); }
+  to { text-shadow: 0 0 25px rgba(59,130,246,0.7); }
+}
+
+@keyframes pulseText {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
 }
 
 </style>

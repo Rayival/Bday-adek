@@ -13,17 +13,20 @@
       <span v-for="i in 6" :key="i" :style="randomStyle()">💙</span>
     </div>
 
-    <!-- 💎 content -->
-    <div class="container">
+    <!-- 💎 card -->
+    <div class="card">
 
-      <!-- 🔥 typography premium -->
-      <h1 class="title">
-        for adee
-      </h1>
+      <!-- 🕒 CLOCK -->
+      <div class="header">
+        <p class="label">for you 💙</p>
+        <h1 class="time">{{ time }}</h1>
+        <p class="date">✨ {{ date }}</p>
+      </div>
 
-      <p class="subtitle">
-        something small... but special 💙
-      </p>
+      <!-- ✨ SVG (CLEAN GEOMETRIC, BUKAN ORNAMEN Aneh) -->
+      <svg class="svg-line" viewBox="0 0 400 100">
+        <path d="M0 50 Q100 0 200 50 T400 50" />
+      </svg>
 
       <!-- 🔘 PIN -->
       <div class="pin-display">
@@ -32,7 +35,7 @@
         </span>
       </div>
 
-      <!-- 🔢 KEYPAD -->
+      <!-- 🔢 keypad -->
       <div class="keypad">
         <button v-for="n in numbers" :key="n" @click="press(n)">
           {{ n }}
@@ -45,7 +48,7 @@
 
       <!-- ❌ error -->
       <p v-if="error" class="error">
-        hmm salah 😭 coba lagi yaa
+        wrong code 😭 try again yaa
       </p>
 
     </div>
@@ -54,7 +57,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 
 const emit = defineEmits(['success'])
 
@@ -62,6 +65,30 @@ const pin = ref("")
 const error = ref(false)
 
 const numbers = [1,2,3,4,5,6,7,8,9]
+
+// ⏰ clock
+const time = ref("")
+const date = ref("")
+
+onMounted(() => {
+  const update = () => {
+    const now = new Date()
+
+    time.value = now.toLocaleTimeString('id-ID', {
+      hour: '2-digit',
+      minute: '2-digit'
+    })
+
+    date.value = now.toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
+    })
+  }
+
+  update()
+  setInterval(update, 1000)
+})
 
 const press = (num) => {
   if (pin.value.length < 6) pin.value += num
@@ -75,13 +102,13 @@ watch(pin, (val) => {
   if (val.length === 6) {
     if (val === "160408") {
       error.value = false
-      setTimeout(() => emit('success'), 400)
+      setTimeout(() => emit('success'), 500)
     } else {
       error.value = true
       setTimeout(() => {
         pin.value = ""
         error.value = false
-      }, 600)
+      }, 700)
     }
   }
 })
@@ -94,25 +121,25 @@ const randomStyle = () => ({
 
 <style scoped>
 
-/* 🌌 wrapper */
+/* wrapper */
 .wrapper {
-  @apply min-h-screen flex items-center justify-center relative overflow-hidden;
+  @apply relative flex items-center justify-center overflow-hidden px-4;
+  min-height: 100dvh;
 }
 
-/* 🌌 background */
+/* bg */
 .bg {
   position: absolute;
   inset: 0;
   background: linear-gradient(120deg, #020617, #0f172a, #020617);
 }
 
-/* 🌫️ glow */
+/* glow */
 .glow {
   position: absolute;
   border-radius: 9999px;
   filter: blur(150px);
   opacity: 0.25;
-  animation: moveGlow 12s ease-in-out infinite alternate;
 }
 
 .g1 {
@@ -131,12 +158,7 @@ const randomStyle = () => ({
   right: -150px;
 }
 
-@keyframes moveGlow {
-  from { transform: translateY(0); }
-  to { transform: translateY(30px); }
-}
-
-/* ✨ floating */
+/* floating */
 .floating span {
   position: absolute;
   bottom: -10px;
@@ -150,75 +172,90 @@ const randomStyle = () => ({
   to { transform: translateY(-120vh); opacity: 0; }
 }
 
-/* 💎 content */
-.container {
-  @apply text-center z-10 px-6;
+/* card */
+.card {
+  @apply backdrop-blur-xl bg-white/5 border border-white/10
+         rounded-3xl p-8 md:p-10 text-center
+         shadow-2xl max-w-sm w-full z-10;
 }
 
-/* 🔥 typography */
-.title {
+/* header */
+.label {
+  @apply text-blue-300 text-sm mb-1;
+  letter-spacing: 2px;
+}
+
+.time {
   font-family: 'Playfair Display', serif;
-  @apply text-4xl md:text-5xl text-white font-semibold;
+  @apply text-5xl text-white;
 }
 
-.subtitle {
-  font-family: 'Inter', sans-serif;
-  @apply text-sm text-blue-300 mt-2;
+.date {
+  @apply text-blue-400 text-sm mt-1;
 }
 
-/* 🔘 PIN */
+/* SVG line */
+.svg-line {
+  width: 100%;
+  margin: 16px 0;
+}
+
+.svg-line path {
+  stroke: #60a5fa;
+  stroke-width: 1.5;
+  fill: none;
+  opacity: 0.3;
+}
+
+/* PIN */
 .pin-display {
-  @apply flex justify-center gap-3 mt-8 mb-6;
+  @apply flex justify-center gap-3 mt-6 mb-6;
 }
 
 .dot {
-  @apply w-4 h-4 rounded-full border border-blue-400/50 flex items-center justify-center;
+  @apply w-4 h-4 rounded-full border border-blue-400/30 flex items-center justify-center;
 }
 
 .filled {
   @apply w-2.5 h-2.5 bg-blue-400 rounded-full;
-  animation: pop 0.2s ease;
+  box-shadow: 0 0 10px rgba(96,165,250,0.6);
 }
 
-@keyframes pop {
-  from { transform: scale(0.5); }
-  to { transform: scale(1); }
-}
-
-/* 🔢 keypad */
+/* keypad */
 .keypad {
-  @apply grid grid-cols-3 gap-4 max-w-xs mx-auto;
+  @apply grid grid-cols-3 gap-4 mt-2;
+  width: 100%;
+  max-width: 260px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .keypad button {
-  @apply w-16 h-16 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white text-lg transition;
+  width: 64px;
+  height: 64px;
+
+  margin: auto;
+
+  @apply rounded-full bg-white/5 border border-white/10 
+         text-white text-lg transition flex items-center justify-center;
 }
 
 .keypad button:hover {
-  transform: scale(1.08);
+  transform: scale(1.1);
   box-shadow: 0 0 20px rgba(59,130,246,0.3);
 }
 
-.keypad button:active {
-  transform: scale(0.9);
+.pin-display {
+  @apply flex justify-center gap-3 mt-8 mb-8;
 }
 
 .empty {
-  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
 }
-
-/* ❌ error */
+/* error */
 .error {
   @apply text-red-400 text-sm mt-4;
-  animation: shake 0.3s;
-}
-
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-4px); }
-  50% { transform: translateX(4px); }
-  75% { transform: translateX(-4px); }
-  100% { transform: translateX(0); }
 }
 
 </style>

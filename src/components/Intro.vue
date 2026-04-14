@@ -8,43 +8,41 @@
     <div class="glow g1"></div>
     <div class="glow g2"></div>
 
-    <!-- ✨ floating -->
-    <div class="floating">
-      <span v-for="i in 6" :key="i" :style="randomStyle()">💙</span>
-      <span v-for="i in 3" :key="'s'+i" :style="randomStyle()">✨</span>
-    </div>
-
-    <!-- 🎁 visual ringan -->
-    <div class="visual">
-      <div class="box">
-        💙
-      </div>
-
-      <div class="sparkle">
-        ✨
-      </div>
+    <!-- ✨ subtle particles -->
+    <div class="particles">
+      <span v-for="i in 6" :key="i" :style="randomStyle()"></span>
     </div>
 
     <!-- 💎 content -->
     <div class="content">
 
-      <h1 class="heading">
-        {{ displayedTextLine1 }}
-      </h1>
+  <!-- ✨ TOP SVG -->
+  <svg class="svg-top" viewBox="0 0 400 100">
+    <path d="M0 50 Q100 10 200 50 T400 50" />
+  </svg>
 
-      <h2 class="highlight">
-        {{ displayedTextLine2 }}
-      </h2>
+  <h1 class="heading">
+    {{ line1 }}
+  </h1>
 
-      <p class="sub">
-        a small story made with care
-      </p>
+  <h2 class="highlight">
+    {{ line2 }}
+  </h2>
 
-      <button v-if="done" @click="$emit('next')" class="btn">
-        klik pelan-pelan yaa 💙 →
-      </button>
+  <p class="sub">
+    a small story made with care
+  </p>
 
-    </div>
+  <!-- ✨ BOTTOM SVG -->
+  <svg class="svg-bottom" viewBox="0 0 400 100">
+    <path d="M0 50 Q100 90 200 50 T400 50" />
+  </svg>
+
+  <button v-if="showBtn" @click="$emit('next')" class="btn">
+    continue →
+  </button>
+
+</div>
 
   </div>
 </template>
@@ -52,40 +50,15 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
-const line1 = "hai adee..."
-const line2 = "aa ada sesuatu kecil nih 😄"
+const line1 = ref("")
+const line2 = ref("")
+const showBtn = ref(false)
 
-const displayedTextLine1 = ref("")
-const displayedTextLine2 = ref("")
-const done = ref(false)
-
-onMounted(async () => {
-  await typeLine(line1, displayedTextLine1)
-  await delay(400)
-  await typeLine(line2, displayedTextLine2)
-
-  setTimeout(() => {
-    done.value = true
-  }, 500)
+onMounted(() => {
+  setTimeout(() => line1.value = "hey...", 300)
+  setTimeout(() => line2.value = "i made something for you", 1000)
+  setTimeout(() => showBtn.value = true, 1800)
 })
-
-const typeLine = (text, target) => {
-  return new Promise((resolve) => {
-    let i = 0
-    const typing = () => {
-      if (i < text.length) {
-        target.value += text[i]
-        i++
-        setTimeout(typing, 30 + Math.random() * 40)
-      } else {
-        resolve()
-      }
-    }
-    typing()
-  })
-}
-
-const delay = (ms) => new Promise(res => setTimeout(res, ms))
 
 const randomStyle = () => ({
   left: Math.random() * 100 + "%",
@@ -95,25 +68,24 @@ const randomStyle = () => ({
 
 <style scoped>
 
-/* 🌌 wrapper */
+/* wrapper */
 .wrapper {
-  @apply min-h-screen flex items-center justify-center relative overflow-hidden;
+  @apply min-h-screen flex items-center justify-center relative overflow-hidden px-4;
 }
 
-/* 🌌 background */
+/* bg */
 .bg {
   position: absolute;
   inset: 0;
   background: linear-gradient(120deg, #020617, #0f172a, #020617);
 }
 
-/* 🌫️ glow */
+/* glow */
 .glow {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(150px);
+  filter: blur(140px);
   opacity: 0.25;
-  animation: moveGlow 12s ease-in-out infinite alternate;
 }
 
 .g1 {
@@ -132,79 +104,84 @@ const randomStyle = () => ({
   right: -120px;
 }
 
-/* ✨ floating */
-.floating span {
+/* particles (super subtle) */
+.particles span {
   position: absolute;
-  bottom: -10px;
-  font-size: 12px;
-  opacity: 0.15;
+  width: 3px;
+  height: 3px;
+  background: white;
+  opacity: 0.08;
+  border-radius: 999px;
   animation: floatUp linear infinite;
 }
 
-/* 🎁 visual */
-.visual {
-  position: absolute;
-  top: 18%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 5;
-}
-
-/* box kecil (ringan) */
-.box {
-  width: 80px;
-  height: 80px;
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(15px);
-  border-radius: 18px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 28px;
-  color: white;
-
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-}
-
-/* sparkle kecil */
-.sparkle {
-  position: absolute;
-  right: -15px;
-  bottom: -15px;
-
-  width: 40px;
-  height: 40px;
-
-  background: white;
-  border-radius: 999px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 16px;
-
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-/* 💎 content */
+/* content */
 .content {
-  @apply text-center px-6 z-10 max-w-xl;
+  @apply text-center z-10 max-w-2xl;
 }
 
-/* typography */
+/* SVG TOP */
+.svg-top {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.svg-top path {
+  stroke: #60a5fa;
+  stroke-width: 1.5;
+  fill: none;
+  opacity: 0.25;
+
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+  animation: drawLine 2s ease forwards;
+}
+
+/* SVG BOTTOM */
+.svg-bottom {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.svg-bottom path {
+  stroke: #60a5fa;
+  stroke-width: 1.5;
+  fill: none;
+  opacity: 0.15;
+}
+
+/* ✨ subtle glow tengah */
+.content::before {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(59,130,246,0.15), transparent);
+  filter: blur(80px);
+  z-index: -1;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+}
+
+/* content fix */
+.content {
+  @apply text-center z-10 max-w-2xl relative;
+}
+
+/* heading */
 .heading {
   font-family: 'Playfair Display', serif;
-  @apply text-3xl md:text-6xl text-white font-semibold;
+  @apply text-4xl md:text-6xl text-white font-semibold;
 }
 
+/* highlight */
 .highlight {
   font-family: 'Playfair Display', serif;
-  @apply text-3xl md:text-6xl italic text-blue-400 mt-2;
+  @apply text-4xl md:text-6xl italic text-blue-400 mt-2;
 }
 
+/* sub */
 .sub {
   font-family: 'Inter', sans-serif;
   @apply text-xs tracking-[0.3em] text-blue-300 mt-6 uppercase;
@@ -212,20 +189,40 @@ const randomStyle = () => ({
 
 /* button */
 .btn {
-  @apply mt-10 px-6 md:px-8 py-3 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white transition;
+  @apply mt-10 px-8 py-3 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white transition;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards;
+  animation-delay: 1.8s;
 }
-
 .btn:hover {
   transform: scale(1.05);
   background: rgba(255,255,255,0.2);
 }
-
-/* animasi */
-@keyframes moveGlow {
-  from { transform: translateY(0); }
-  to { transform: translateY(20px); }
+.heading,
+.highlight,
+.sub {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeUp 0.8s ease forwards;
 }
 
+.heading { animation-delay: 0.4s }
+.highlight { animation-delay: 0.9s }
+.sub { animation-delay: 1.4s }
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* animasi */
+@keyframes drawLine {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
 @keyframes floatUp {
   from { transform: translateY(0); }
   to { transform: translateY(-120vh); opacity: 0; }
