@@ -1,43 +1,60 @@
 <template>
   <div class="wrapper">
 
-    <!-- 🌌 background -->
+    <!-- 🌌 bg -->
     <div class="bg"></div>
 
-    <!-- 🌫️ glow (safe layer) -->
+    <!-- 🌫️ glow -->
     <div class="glow g1"></div>
     <div class="glow g2"></div>
 
-    <!-- 💎 layout -->
-    <div class="container">
+    <!-- 🌌 vignette -->
+    <div class="vignette"></div>
 
-      <!-- ✨ TEXT -->
-      <div class="text-block">
-        <h1 class="title">it started simply...</h1>
+    <!-- ✨ particles -->
+    <div class="particles">
+      <span v-for="i in 8" :key="i" :style="randomParticle()"></span>
+    </div>
 
-        <h2 class="highlight">just something small</h2>
-
-        <p class="sub">
-          but somehow, it stayed longer than expected
-        </p>
-
-        <button @click="$emit('next')" class="btn">
-          continue →
-        </button>
-      </div>
+    <!-- 💎 content -->
+    <div class="content">
 
       <!-- 🎁 VISUAL -->
       <div class="visual">
 
-        <!-- animated rings -->
+        <!-- rings -->
         <div class="ring r1"></div>
         <div class="ring r2"></div>
         <div class="ring r3"></div>
 
-        <!-- glass card -->
+        <!-- glow core -->
+        <div class="orb"></div>
+
+        <!-- glass box -->
         <div class="box">
           <Gift class="icon" />
         </div>
+
+      </div>
+
+      <!-- ✨ TEXT -->
+      <div class="text-block">
+
+        <h1 class="title fade1">
+          it started simply...
+        </h1>
+
+        <h2 class="highlight fade2">
+          just something small
+        </h2>
+
+        <p class="sub fade3">
+          but somehow, it stayed longer than expected
+        </p>
+
+        <button @click="$emit('next')" class="btn fade4">
+          continue →
+        </button>
 
       </div>
 
@@ -48,158 +65,176 @@
 
 <script setup>
 import { Gift } from 'lucide-vue-next'
+
+const randomParticle = () => ({
+  left: Math.random() * 100 + "%",
+  animationDuration: 6 + Math.random() * 6 + "s"
+})
 </script>
 
 <style scoped>
 
-/* 🌌 WRAPPER */
+/* 🌌 WRAPPER (SAFE MOBILE) */
 .wrapper {
-  @apply min-h-screen flex items-center justify-center relative overflow-hidden px-5 md:px-8;
+  @apply relative flex items-center justify-center overflow-hidden px-5;
+  min-height: 100dvh;
+  padding-top: clamp(80px, 12vh, 140px);
+  padding-bottom: clamp(80px, 12vh, 140px);
 }
 
-/* 🌌 BG */
+/* BG */
 .bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(120deg, #020617, #0f172a, #020617);
+  background: radial-gradient(circle at center, #0f172a, #020617);
 }
 
-/* 🌫️ GLOW (NO BLOCK CLICK) */
+/* vignette cinematic */
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.7));
+}
+
+/* glow */
 .glow {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(140px);
+  filter: blur(160px);
   opacity: 0.25;
-  pointer-events: none;
-  z-index: 0;
 }
 
 .g1 {
-  width: 350px;
-  height: 350px;
+  width: 400px;
+  height: 400px;
   background: #3b82f6;
-  top: -120px;
-  left: -120px;
+  top: -150px;
+  left: -150px;
 }
 
 .g2 {
-  width: 250px;
-  height: 250px;
+  width: 300px;
+  height: 300px;
   background: #60a5fa;
-  bottom: -120px;
-  right: -120px;
+  bottom: -150px;
+  right: -150px;
 }
 
-/* 💎 LAYOUT */
-.container {
-  @apply grid md:grid-cols-2 gap-10 md:gap-14 items-center max-w-5xl w-full;
-  position: relative;
-  z-index: 10;
+/* ✨ particles */
+.particles span {
+  position: absolute;
+  bottom: -10px;
+  width: 3px;
+  height: 3px;
+  background: white;
+  opacity: 0.08;
+  border-radius: 999px;
+  animation: floatUp linear infinite;
 }
 
-/* ✨ TEXT */
-.text-block {
-  @apply text-center md:text-left;
-}
-
-.title {
-  font-family: 'Playfair Display', serif;
-  @apply text-2xl md:text-5xl text-white;
-  animation: fadeUp 0.8s ease forwards;
-}
-
-.highlight {
-  font-family: 'Playfair Display', serif;
-  @apply text-2xl md:text-5xl italic text-blue-400 mt-2;
-  animation: fadeUp 0.8s ease forwards;
-  animation-delay: 0.3s;
-}
-
-.sub {
-  @apply text-xs md:text-sm text-blue-300 mt-4 leading-relaxed;
-  animation: fadeUp 0.8s ease forwards;
-  animation-delay: 0.6s;
+/* CONTENT */
+.content {
+  @apply text-center z-10 max-w-xl w-full;
 }
 
 /* 🎁 VISUAL */
 .visual {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-bottom: 40px;
 }
 
-/* 💎 BOX */
+/* ORB (heartbeat sync) */
+.orb {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(59,130,246,0.35), transparent);
+  border-radius: 999px;
+  filter: blur(50px);
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  animation: heartbeat 3s ease-in-out infinite;
+}
+
+/* BOX */
 .box {
-  width: 110px;
-  height: 110px;
+  width: 100px;
+  height: 100px;
 
-  @media (min-width: 768px) {
-    width: 140px;
-    height: 140px;
-  }
-
-  background: rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.06);
   backdrop-filter: blur(25px);
-  border-radius: 28px;
+  border-radius: 24px;
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  margin: auto;
+  position: relative;
+  z-index: 2;
 
   box-shadow: 0 25px 80px rgba(0,0,0,0.5);
 
-  z-index: 3;
-
-  animation: scaleIn 0.8s ease forwards;
+  animation: floatBox 4s ease-in-out infinite;
 }
 
-/* 🎯 ICON */
+@media (min-width: 768px) {
+  .box {
+    width: 130px;
+    height: 130px;
+  }
+}
+
+/* ICON */
 .icon {
   width: 32px;
   height: 32px;
-
-  @media (min-width: 768px) {
-    width: 42px;
-    height: 42px;
-  }
-
   color: white;
 }
 
-/* 🔵 RINGS */
+@media (min-width: 768px) {
+  .icon {
+    width: 42px;
+    height: 42px;
+  }
+}
+
+/* RINGS (sync heartbeat) */
 .ring {
   position: absolute;
   border-radius: 999px;
   border: 1px solid rgba(96,165,250,0.2);
-  pointer-events: none;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.r1 {
-  width: 150px;
-  height: 150px;
-  animation: pulse 3s infinite;
+.r1 { width: 140px; height: 140px; animation: pulse 3s infinite; }
+.r2 { width: 200px; height: 200px; animation: pulse 3s infinite 1s; }
+.r3 { width: 260px; height: 260px; animation: pulse 3s infinite 2s; }
+
+/* TEXT */
+.title {
+  font-family: 'Playfair Display', serif;
+  @apply text-2xl md:text-5xl text-white;
 }
 
-.r2 {
-  width: 200px;
-  height: 200px;
-  animation: pulse 3s infinite;
-  animation-delay: 1s;
+.highlight {
+  font-family: 'Playfair Display', serif;
+  @apply text-2xl md:text-5xl italic text-blue-400 mt-2;
 }
 
-.r3 {
-  width: 260px;
-  height: 260px;
-  animation: pulse 3s infinite;
-  animation-delay: 2s;
+.sub {
+  @apply text-xs md:text-sm text-blue-300 mt-5;
 }
 
-/* 🔘 BUTTON */
+/* BUTTON (CLICK SAFE) */
 .btn {
-  @apply mt-6 px-6 py-3 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white transition;
-  animation: fadeUp 0.8s ease forwards;
-  animation-delay: 0.9s;
+  @apply mt-10 px-6 py-3 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white transition;
 
   position: relative;
   z-index: 20;
@@ -208,41 +243,39 @@ import { Gift } from 'lucide-vue-next'
 .btn:hover {
   transform: scale(1.05);
   background: rgba(255,255,255,0.2);
-  box-shadow: 0 0 25px rgba(59,130,246,0.3);
 }
 
-/* 🎬 ANIMATIONS */
-@keyframes pulse {
-  0% {
-    transform: scale(0.7);
-    opacity: 0.4;
-  }
-  100% {
-    transform: scale(1.5);
-    opacity: 0;
-  }
-}
+/* FADE */
+.fade1 { animation: fadeUp 1s forwards 0.5s; opacity:0 }
+.fade2 { animation: fadeUp 1s forwards 1.3s; opacity:0 }
+.fade3 { animation: fadeUp 1s forwards 2.2s; opacity:0 }
+.fade4 { animation: fadeUp 1s forwards 3s; opacity:0 }
 
+/* ANIMATIONS */
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity:0; transform: translateY(20px); }
+  to { opacity:1; transform: translateY(0); }
 }
 
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.7);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+/* heartbeat (smooth) */
+@keyframes heartbeat {
+  0%,100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.1); }
+}
+
+@keyframes pulse {
+  0% { transform: translate(-50%, -50%) scale(0.7); opacity:0.4 }
+  100% { transform: translate(-50%, -50%) scale(1.6); opacity:0 }
+}
+
+@keyframes floatUp {
+  from { transform: translateY(0); }
+  to { transform: translateY(-120vh); opacity:0 }
+}
+
+@keyframes floatBox {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
 </style>

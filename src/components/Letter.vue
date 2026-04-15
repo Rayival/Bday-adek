@@ -8,6 +8,9 @@
     <div class="glow g1"></div>
     <div class="glow g2"></div>
 
+    <!-- ✨ grain -->
+    <div class="noise"></div>
+
     <!-- ✨ floating -->
     <div class="floating">
       <span v-for="i in 5" :key="i" :style="randomStyle()">💙</span>
@@ -17,17 +20,17 @@
     <!-- 💎 content -->
     <div class="content">
 
-      <!-- 📝 title -->
       <h1 class="heading">for you ✨</h1>
 
+      <!-- SVG -->
       <svg class="svg-top" viewBox="0 0 400 100">
         <path d="M0 50 Q100 10 200 50 T400 50" />
       </svg>
 
-      <!-- 📖 letter -->
+      <!-- 📖 LETTER -->
       <div class="letter">
 
-        <div class="icon-overlay">💙</div>
+        <div class="icon-overlay">🫂💙</div>
 
         <p class="text">
           <span v-html="displayed"></span>
@@ -56,12 +59,11 @@ import { ref, onMounted } from 'vue'
 const displayed = ref("")
 const done = ref(false)
 
-/* 💙 isi lebih panjang + campur indo english + minta maaf */
 const sentences = [
-  "selamat ulang tahun yaa 🎂",
+  "selamat ulang tahun yaa adekkk 🎂",
   "",
   "hari ini mungkin cuma satu hari biasa buat banyak orang…",
-  "tapi buat aku… hari ini spesial banget.",
+  "tapi buat aku… hari ini spesial bangettt.",
   "",
   "hari dimana seseorang yang berarti banget di hidup aku lahir ke dunia ini.",
   "",
@@ -82,8 +84,8 @@ const sentences = [
   "bahkan hal kecil kayak ngasih sesuatu ke kamu aja…",
   "aku belum pernah.",
   "",
-  "dan entah kenapa…",
-  "itu selalu kepikiran sampai sekarang.",
+  "dan yaaa…",
+  "itu selalu buat aku kepikiran sampai sekarang.",
   "",
   "makanya di momen ini…",
   "aku pengen memperbaiki itu.",
@@ -117,15 +119,14 @@ const sentences = [
   "",
   "kamu yang jadi alasan diam-diam aku buat jadi lebih baik.",
   "",
-  "",
   "<b>maafin aku ya adee…</b>",
   "",
   "selama ini aku banyak salah.",
   "banyak bikin kamu kecewa…",
   "banyak bikin kamu sedih…",
   "",
-  "bahkan mungkin…",
-  "pernah bikin kamu nangis.",
+  "dan bahkan…",
+  "bikin kamu nangis.",
   "",
   "dan jujur…",
   "kalau aku inget itu semua…",
@@ -141,17 +142,16 @@ const sentences = [
   "",
   "setidaknya jadi versi yang lebih baik dari yang dulu.",
   "",
-  "",
   "aku juga mau bilang sesuatu…",
   "",
   "yang mungkin sederhana…",
   "tapi ini jujur dari hati aku",
   "",
-  "<b>aku selalu sayang banget sama kamu.</b>",
+  "<b>aku selalu sayangg bangett sama kamuu.</b>",
   "",
   "aku ga mau bikin semuanya jadi berat…",
   "",
-  "aku cuma pengen kamu ngerasa satu hal:",
+  "aku cuma pengen kamu ngerasa satu hal",
   "",
   "bahwa kamu dihargai…",
   "bahwa kehadiran kamu berarti…",
@@ -162,17 +162,14 @@ const sentences = [
   "selalu bangga sama kamu…",
   "dan selalu dukung kamu.",
   "",
-  "",
-  "sekali lagi…",
-  "",
   "<b>selamat ulang tahun yaa </b>",
   "",
   "semoga hari kamu hangat…",
   "penuh senyum…",
   "dan penuh hal-hal baik.",
   "",
-  "",
-  "<span class='hand'>i'll always care about you… ilysm❤️.</span>"
+  "<span class='hand'>i'll always care about you… ilysm💙.</span>",
+  "<span class='signature'>— <a href='https://rayival.vercel.app' target='_blank'>Valdes</a></span>"
 ]
 
 const typeSentence = (sentence) => {
@@ -211,76 +208,77 @@ const randomStyle = () => ({
 
 <style scoped>
 
-/* wrapper */
+/* 🌌 WRAPPER */
 .wrapper {
   @apply min-h-screen flex flex-col justify-start relative overflow-hidden px-4;
   padding-top: clamp(80px, 10vh, 140px);
   padding-bottom: clamp(80px, 10vh, 140px);
 }
 
-/* bg */
+/* BG */
 .bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(120deg, #020617, #0f172a, #020617);
+  background: radial-gradient(circle at center, #0f172a, #020617);
 }
 
-.svg-top, .svg-bottom {
-  width: 100%;
-}
-
-.svg-top path {
-  stroke: #60a5fa;
-  stroke-width: 1.5;
-  fill: none;
-  opacity: 0.2;
-}
-
-.svg-bottom path {
-  stroke: #60a5fa;
-  stroke-width: 1.5;
-  fill: none;
-  opacity: 0.15;
-}
-
-.icon-overlay {
+/* vignette */
+.wrapper::after {
+  content: "";
   position: absolute;
-  top: -20px;
-  right: -20px;
-  font-size: 60px;
-  opacity: 0.05;
-  pointer-events: none;
-  filter: blur(2px);
+  inset: 0;
+  background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.8));
 }
 
 /* glow */
 .glow {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(140px);
+  filter: blur(160px);
   opacity: 0.25;
+  animation: float 12s infinite alternate;
 }
 
-/* floating */
-.floating span {
+/* grain */
+.noise {
   position: absolute;
-  bottom: -10px;
-  font-size: 14px;
-  opacity: 0.15;
-  animation: floatUp linear infinite;
+  inset: 0;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.05;
+}
+
+.svg-top path,
+.svg-bottom path {
+  stroke: #60a5fa;
+  stroke-width: 1.5;
+  fill: none;
+  opacity: 0.3;
+
+  /* ✨ animasi biar hidup */
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+  animation: drawLine 3s ease forwards;
+}
+
+@keyframes drawLine {
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
 /* content */
 .content {
-  @apply text-center z-10 max-w-2xl mx-auto;
+  @apply text-center z-10 max-w-2xl mx-auto relative;
 }
+
+/* spotlight */
 .content::before {
   content: "";
   position: absolute;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(59,130,246,0.15), transparent);
-  filter: blur(100px);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(59,130,246,0.2), transparent);
+  filter: blur(120px);
   left: 50%;
   top: 40%;
   transform: translate(-50%, -50%);
@@ -295,64 +293,93 @@ const randomStyle = () => ({
 
 /* letter */
 .letter {
-  @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 md:p-10 text-left;
-  box-shadow: 
-    0 20px 60px rgba(0,0,0,0.4),
+  @apply relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 md:p-10 text-left;
+
+  box-shadow:
+    0 30px 80px rgba(0,0,0,0.6),
     inset 0 1px 0 rgba(255,255,255,0.1);
-    animation: fadeUp 1s ease;
+
+  overflow: hidden;
+}
+
+/* border glow */
+.letter::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(120deg, transparent, rgba(96,165,250,0.4), transparent);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
 }
 
 /* text */
 .text {
-  font-family: 'Inter', sans-serif;
-  @apply text-sm md:text-base text-blue-100 leading-relaxed tracking-wide;
+  font-family: 'DM Serif Display', serif;
+  @apply text-[15px] md:text-[17px] text-blue-100 leading-[1.9];
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.05),
+    0 10px 30px rgba(0,0,0,0.6);
+  letter-spacing: 0.3px;
 }
 
 /* highlight */
 .text b {
-  @apply text-blue-400 font-semibold;
+  color: #93c5fd;
+  font-weight: 600;
+
+  text-shadow: 0 0 10px rgba(96,165,250,0.3);
+}
+
+.signature {
+  display: block;
+  margin-top: 12px;
+
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+
+  color: #93c5fd;
+  opacity: 0.8;
+
+  letter-spacing: 1px;
+}
+
+/* link style */
+.signature a {
+  text-decoration: none;
+  color: #60a5fa;
+
+  font-weight: 500;
+
+  border-bottom: 1px solid rgba(96,165,250,0.4);
+  transition: all 0.3s ease;
+}
+
+/* hover effect */
+.signature a:hover {
+  color: white;
+  border-bottom: 1px solid white;
 }
 
 /* handwriting */
 .hand {
   font-family: 'Caveat', cursive;
-  @apply text-blue-300 text-lg;
-}
+  font-size: 20px;
+  color: #93c5fd;
 
-/* cursor */
-.cursor {
-  animation: blink 1s infinite;
+  text-shadow: 0 0 10px rgba(96,165,250,0.4);
 }
 
 /* button */
 .btn {
-  @apply mt-10 px-6 py-3 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white transition;
+  @apply mt-10 px-6 py-3 rounded-full bg-white/10 border border-white/20 text-white;
 }
 
-.btn:hover {
-  transform: scale(1.05);
-}
-
-/* animasi */
-@keyframes floatUp {
+/* anim */
+@keyframes float {
   from { transform: translateY(0); }
-  to { transform: translateY(-120vh); opacity: 0; }
-}
-
-@keyframes blink {
-  0%,100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  to { transform: translateY(30px); }
 }
 
 </style>

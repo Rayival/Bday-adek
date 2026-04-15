@@ -70,6 +70,26 @@
 
       </div>
 
+      <!-- 💙 FINAL CARD -->
+      <div class="card final-card">
+
+        <div class="overlay"></div>
+        <div class="shine"></div>
+
+        <div class="final-content">
+
+          <div class="final-icon">⭐⭐⭐⭐⭐</div>
+
+          <p class="final-text">
+            makasihh banyakk yaa ade,<br/>
+            moment sekecil apapun kalo sama kamu<br/>
+            ituu berartii bangett buatt akuuu
+          </p>
+
+        </div>
+
+      </div>
+
       <!-- button -->
       <button @click="$emit('next')" class="btn">
         continue →
@@ -91,19 +111,19 @@ const items = [
     type: 'img',
     src: foto1,
     title: 'a quiet night in the rain',
-    desc: 'malam itu kita ujanan bareng… inget banget suasananya dingin, jalanan juga sepi. aa nemenin kamu jalan karena jujur aa khawatir… takut kamu kenapa-napa. tapi anehnya, di tengah rasa khawatir itu aa malah ngerasa seneng bangettt sesimpel itu aja udah bikin aa ngerasa hangat. kayak… aa pengen momen itu ga cepet selesai. sampai sekarang kalau inget itu, rasanya masih sama… hangat dan tenang.'
+    desc: 'malam itu kita ujanan… inget banget suasananya dinginn. aa nemenin kamu di jalan karena jujur aa khawatir… takut kamu kenapa-napa. tapi anehnya, di tengah rasa khawatir itu aa malah ngerasa seneng bangettt sesimpel itu aja udah bikin aa ngerasa hangat. kayak… aa pengen momen itu ga cepet selesai. sampai sekarang kalau inget itu, rasanya masih sama… hangat dan tenang.'
   },
   {
     type: 'img',
     src: foto2,
     title: 'our first little moment',
-    desc: 'ini pertama kalinya kita tos… keliatannya kecil banget ya, bahkan mungkin biasa aja buat orang lain. tapi buat aa, itu beda. dari hal kecil itu aa mulai ngerasa nyaman… mulai ngerasa ada sesuatu yang spesial tanpa harus dijelasin. lucunya, justru moment kecil kayak gini yang paling sering keinget sampai sekarang 😄'
+    desc: 'ini pertama kalinya kita tos… keliatannya kaya hal kecil banget yaa, bahkan mungkin biasa aja buat orang lain. tapi buat aa, itu beda. dari hal kecil itu justru buat aa ngerasa nyaman… ngerasa ada sesuatu yang spesial tanpa harus dijelasin. lucunya, justru moment kecil kayak gini yang paling sering keinget sampai sekarang '
   },
   {
     type: 'img',
     src: foto3,
     title: 'when we started talking',
-    desc: 'ini pertama kali kita ngobrol… masih malu-malu banget, bahkan pas fotbar juga keliatan kaku 😭 tapi justru itu yang bikin semuanya kerasa jujur. ga ada yang dibuat-buat, semuanya ngalir aja. dari situ aa mulai kenal kamu pelan-pelan… cara kamu ngomong, cara kamu bersikap… dan tanpa sadar, dari moment sesimpel itu aa mulai ngerasa kamu berarti.'
+    desc: 'ini pertama kali kita ngobrol, duduk deketann dan masih malu-malu banget, bahkan pas fotbar juga keliatan kaku 😭 tapi justru itu yang bikin semuanya kerasa jujur. ga ada yang dibuat-buat, semuanya ngalir aja. dari situ aa mulai kenal kamu pelan-pelan… cara kamu ngomong, cara kamu bersikap… dan tanpa sadar, dari moment sesimpel itu aa mulai ngerasa kamu berarti.'
   },
   {
     type: 'video',
@@ -186,6 +206,49 @@ const randomStyle = () => ({
   opacity: 0.15;
   animation: floatUp linear infinite;
   pointer-events: none;
+}
+
+/* 💙 FINAL CARD */
+.final-card {
+  @apply flex items-center justify-center text-center;
+  min-height: 180px;
+  grid-column: span 2;
+  margin-top: 28px;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.06),
+    rgba(59,130,246,0.08)
+  );
+}
+
+/* content tengah */
+.final-content {
+  padding: 28px 24px;
+}
+
+/* icon */
+.final-icon {
+  font-size: 28px;
+  margin-bottom: 10px;
+
+  animation: pulse 2s infinite;
+}
+
+/* text */
+.final-text {
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+
+  color: #93c5fd;
+  line-height: 1.6;
+
+  text-shadow: 0 0 12px rgba(96,165,250,0.4);
+}
+
+/* anim */
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
 }
 
 /* content */

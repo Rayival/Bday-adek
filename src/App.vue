@@ -6,10 +6,27 @@
     @success="unlock" 
   />
 
-  <!-- 🎧 MUSIC CONTROL -->
+  <!-- 🎧 MUSIC CONTROL (TOP RIGHT) -->
   <div class="music-control" @click="toggleMusic">
-    <span v-if="isPlaying">🎵</span>
-    <span v-else>🔇</span>
+
+    <!-- 🔊 PLAYING -->
+    <span v-if="isPlaying" class="icon">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M9 18V5l12-2v13" stroke="white" stroke-width="1.5"/>
+        <circle cx="6" cy="18" r="3" stroke="white" stroke-width="1.5"/>
+        <circle cx="18" cy="16" r="3" stroke="white" stroke-width="1.5"/>
+      </svg>
+    </span>
+
+    <!-- 🔇 MUTED -->
+    <span v-else class="icon">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M4 9v6h4l5 4V5L8 9H4z" stroke="white" stroke-width="1.5"/>
+        <line x1="20" y1="9" x2="16" y2="15" stroke="white" stroke-width="1.5"/>
+        <line x1="16" y1="9" x2="20" y2="15" stroke="white" stroke-width="1.5"/>
+      </svg>
+    </span>
+
   </div>
 
   <!-- 🎵 AUDIO -->
@@ -68,7 +85,7 @@ const toggleMusic = () => {
   }
 }
 
-/* 🎬 auto start (after interaction) */
+/* 🎬 auto start */
 onMounted(() => {
   const start = () => {
     if (audio.value) {
@@ -100,14 +117,14 @@ const fadeIn = () => {
 
 <style scoped>
 
-/* 🎧 music button */
+/* 🎧 MUSIC BUTTON (TOP RIGHT) */
 .music-control {
   position: fixed;
-  bottom: 20px;
+  top: 20px;
   right: 20px;
 
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
 
   border-radius: 999px;
 
@@ -119,27 +136,30 @@ const fadeIn = () => {
   align-items: center;
   justify-content: center;
 
-  font-size: 20px;
-  color: white;
-
   cursor: pointer;
+  z-index: 999;
 
   transition: all 0.3s ease;
-  z-index: 999;
+}
+
+/* SVG size */
+.icon svg {
+  width: 22px;
+  height: 22px;
 }
 
 /* hover */
 .music-control:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 25px rgba(59,130,246,0.4);
+  transform: scale(1.08);
+  box-shadow: 0 0 20px rgba(59,130,246,0.4);
 }
 
 /* click */
 .music-control:active {
-  transform: scale(0.9);
+  transform: scale(0.92);
 }
 
-/* subtle glow pulse */
+/* subtle glow */
 .music-control {
   animation: pulseBtn 3s infinite;
 }
@@ -147,6 +167,16 @@ const fadeIn = () => {
 @keyframes pulseBtn {
   0%,100% { box-shadow: 0 0 0 rgba(59,130,246,0); }
   50% { box-shadow: 0 0 15px rgba(59,130,246,0.4); }
+}
+
+/* 📱 mobile safe area */
+@media (max-width: 768px) {
+  .music-control {
+    top: 16px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+  }
 }
 
 </style>
